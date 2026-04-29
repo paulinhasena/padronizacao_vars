@@ -1,0 +1,5 @@
+nome_logico,descricao
+codigo identificacao - pessoa,Formato criptografado do id do cliente.
+data nascimento cliente,Data de nascimento do cliente.
+valor contrato credito,Valor total do contrato de crédito.
+codigo matricula beneficio,Código da matrícula do benefício INSS.

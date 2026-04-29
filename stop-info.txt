@@ -1,0 +1,10 @@
+Como encerrar o Data Naming AI
+
+1. Feche a janela "Data Naming AI - Backend"
+2. Feche a janela "Data Naming AI - Frontend"
+
+Se alguma porta ficar presa:
+- Backend usa porta 8000
+- Frontend usa porta 5173
+
+Em caso de erro, reinicie o terminal ou o computador e execute start.bat novamente.

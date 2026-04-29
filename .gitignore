@@ -1,0 +1,10 @@
+.venv/
+venv/
+__pycache__/
+*.pyc
+.env
+node_modules/
+.DS_Store
+
+# Front buildado pode ser versionado para uso corporativo sem npm.
+!frontend/dist/
