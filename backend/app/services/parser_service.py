@@ -6,13 +6,16 @@ from app.models.schemas import VariableInput
 
 
 def parse_text_input(text: str) -> list[VariableInput]:
-    """Transforma texto livre em lista de variáveis.
+    """Transforma texto colado na tela em lista de variáveis.
 
-    Aceita:
-    - nome
-    - nome | descrição
-    - nome ; descrição
-    - nome, descrição
+    Aceita formatos simples:
+        nome
+        nome | descrição
+        nome ; descrição
+        nome, descrição
+
+    Exemplo:
+        codigo identificacao pessoa | id criptografado do cliente
     """
     variables: list[VariableInput] = []
 
@@ -39,7 +42,7 @@ def parse_text_input(text: str) -> list[VariableInput]:
 
 
 def detect_separator(line: str) -> str | None:
-    """Detecta separador entre nome e descrição."""
+    """Detecta qual separador foi usado entre nome e descrição."""
     for sep in ["|", ";", ","]:
         if sep in line:
             return sep
@@ -47,7 +50,24 @@ def detect_separator(line: str) -> str | None:
 
 
 def parse_file(content: bytes, filename: str) -> list[VariableInput]:
-    """Lê CSV/Excel e converte para contrato interno."""
+    """Lê CSV ou Excel e transforma linhas em variáveis.
+
+    A função tenta identificar automaticamente a coluna principal.
+
+    Nomes aceitos para coluna de variável:
+    - nome_logico
+    - nome lógico
+    - nome
+    - variavel
+    - variável
+    - campo
+    - raw_name
+
+    Nomes aceitos para descrição:
+    - descricao
+    - descrição
+    - description
+    """
     file_bytes = BytesIO(content)
     filename = filename.lower()
 

@@ -1,0 +1,37 @@
+PADRONIZADOR DE VARIÁVEIS - USO RÁPIDO
+
+Para usar:
+
+1. Extraia a pasta do projeto.
+2. Clique duas vezes em:
+
+   INICIAR_PADRONIZADOR.bat
+
+3. Aguarde abrir o navegador.
+4. Acesse:
+
+   http://localhost:8000
+
+Requisitos:
+
+- Python instalado na máquina.
+- Não precisa Node.
+- Não precisa npm.
+- Não precisa rodar npm install.
+- Não precisa node_modules.
+
+Importante:
+
+A interface bonita já vem pronta dentro de:
+
+frontend\dist
+
+Se essa pasta não existir, a interface não abre.
+
+Como gerar frontend\dist:
+
+Em uma máquina pessoal com Node liberado, rode:
+
+GERAR_FRONTEND_PESSOAL.bat
+
+Depois suba a pasta frontend\dist no repositório.

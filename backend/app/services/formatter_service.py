@@ -2,12 +2,18 @@ from app.models.schemas import NormalizedVariable
 
 
 def to_table(results: list[NormalizedVariable]) -> list[dict]:
-    """Prepara tabela para exibição no frontend."""
+    """Converte os resultados para tabela.
+
+    O frontend usa esse formato para montar a grade visual.
+    """
     return [item.model_dump() for item in results]
 
 
 def to_tfvars(results: list[NormalizedVariable]) -> str:
-    """Gera formato terraform.tfvars."""
+    """Gera saída no formato terraform.tfvars.
+
+    Esse formato pode ser útil em fluxos declarativos ou parametrizados.
+    """
     lines = ["variables = {"]
 
     for item in results:
@@ -25,7 +31,10 @@ def to_tfvars(results: list[NormalizedVariable]) -> str:
 
 
 def to_noscript(results: list[NormalizedVariable]) -> str:
-    """Gera formato textual genérico para NoScript/NoCode."""
+    """Gera saída textual para NoScript/NoCode.
+
+    Este formato é mais simples de copiar e colar em outros fluxos.
+    """
     lines = []
 
     for item in results:
@@ -41,12 +50,12 @@ def to_noscript(results: list[NormalizedVariable]) -> str:
 
 
 def escape(value: str) -> str:
-    """Escapa aspas para evitar quebra em texto gerado."""
+    """Escapa aspas para não quebrar o texto gerado."""
     return value.replace('"', '\\"')
 
 
 def format_list(values: list[str]) -> str:
-    """Formata lista em sintaxe compatível com tfvars."""
+    """Formata lista em sintaxe parecida com tfvars."""
     if not values:
         return "[]"
 

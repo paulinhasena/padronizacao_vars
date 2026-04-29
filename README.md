@@ -1,161 +1,232 @@
-# Data Naming AI
+# Padronizador de Variáveis — MVP Local
 
-MVP profissional para padronização de nomes lógicos e físicos usando regras de nomenclatura, dicionário de termos e camada opcional de IA generativa.
+MVP local para padronização de nomes de variáveis usando dicionário de termos, regras de nomenclatura e uma camada preparada para IA/similaridade.
 
-## O que esse MVP faz
+## 1. Objetivo
+
+A ideia é reduzir esforço manual na consulta de termos e mnemônicos, melhorar consistência de nomes e oferecer uma experiência simples para pessoas que precisam padronizar variáveis.
+
+O sistema permite:
+
+- colar variáveis na tela;
+- enviar CSV ou Excel;
+- retornar nome lógico;
+- retornar nome físico;
+- gerar descrição;
+- indicar confiança;
+- gerar saída em tabela;
+- gerar saída em `terraform.tfvars`;
+- gerar saída em formato NoScript/NoCode.
+
+## 2. Como usar — modo mais simples
+
+Use o arquivo:
+
+```text
+INICIAR_PADRONIZADOR.bat
+```
+
+Esse modo:
+
+- não usa Node;
+- não usa npm;
+- não usa Vite;
+- não precisa de `node_modules`;
+- usa o frontend pronto em `frontend/dist`;
+- sobe o backend Python;
+- abre o navegador automaticamente.
+
+### Requisito único
+
+A máquina precisa ter:
+
+```text
+Python
+```
+
+### Passo a passo
+
+1. Baixe o projeto.
+2. Extraia a pasta.
+3. Clique duas vezes em `INICIAR_PADRONIZADOR.bat`.
+4. Use no navegador.
+
+A aplicação abre em:
+
+```text
+http://localhost:8000
+```
+
+## 3. Como gerar o frontend bonito
+
+A interface bonita é gerada uma vez em uma máquina que tenha Node/npm liberado.
+
+Rode:
+
+```text
+GERAR_FRONTEND_PESSOAL.bat
+```
+
+Esse script cria:
+
+```text
+frontend/dist
+```
+
+Depois suba essa pasta no repositório.
+
+No computador corporativo, a pessoa usuária não precisa de Node/npm.
+
+## 4. Arquitetura
+
+```text
+Usuário
+  ↓
+Frontend React já compilado
+  ↓
+Backend Python/FastAPI
+  ↓
+Dicionário CSV + regras
+  ↓
+Resposta estruturada
+```
+
+## 5. Estrutura do projeto
+
+```text
+backend/                         -> backend Python/FastAPI
+frontend/                        -> frontend React
+frontend/dist/                   -> frontend já compilado
+docs/                            -> documentação complementar
+exemplos/                        -> arquivos de exemplo
+INICIAR_PADRONIZADOR.bat         -> script principal para usuário final
+GERAR_FRONTEND_PESSOAL.bat       -> gera frontend/dist na máquina pessoal
+LEIA_ME_PRIMEIRO.txt             -> instrução rápida para usuário
+GUIA_DESENVOLVEDORA.md           -> explicação técnica para manutenção
+README.md                        -> documentação principal
+```
+
+## 6. O que ficou em português e o que ficou em inglês
+
+Ficou em português:
+
+- scripts `.bat`;
+- documentação;
+- textos de orientação;
+- comentários explicativos.
+
+Foi mantido em inglês quando é padrão técnico:
+
+- `backend`;
+- `frontend`;
+- `requirements.txt`;
+- `package.json`;
+- `src`;
+- `components`;
+- `App.jsx`;
+- `api.js`.
+
+Isso evita quebrar ferramentas e mantém padrão de mercado.
+
+## 7. Exemplo de uso
 
 Entrada:
-- texto colado no front
-- CSV
-- Excel
-
-Saída:
-- nome original
-- nome lógico padronizado
-- nome físico padronizado
-- descrição
-- natureza
-- qualificadores
-- confiança
-- justificativa
-- tabela
-- `terraform.tfvars`
-- formato NoScript/NoCode
-- pacote completo com todas as opções
-
-## Arquitetura
 
 ```text
-data-naming-ai/
-├── backend/
-│   ├── app/
-│   │   ├── main.py
-│   │   ├── core/
-│   │   │   └── config.py
-│   │   ├── data/
-│   │   │   └── sample_dictionary.csv
-│   │   ├── models/
-│   │   │   └── schemas.py
-│   │   └── services/
-│   │       ├── ai_service.py
-│   │       ├── formatter_service.py
-│   │       ├── naming_rules.py
-│   │       └── parser_service.py
-│   ├── .env.example
-│   └── requirements.txt
-└── frontend/
-    ├── src/
-    │   ├── App.jsx
-    │   ├── api.js
-    │   ├── index.css
-    │   ├── main.jsx
-    │   └── components/
-    │       ├── Header.jsx
-    │       ├── InputPanel.jsx
-    │       ├── ResultPanel.jsx
-    │       └── ResultTable.jsx
-    ├── index.html
-    ├── package.json
-    └── vite.config.js
-```
-
-## Como rodar o backend
-
-```bash
-cd backend
-python -m venv .venv
-
-# Windows
-.venv\Scripts\activate
-
-# Mac/Linux
-source .venv/bin/activate
-
-pip install -r requirements.txt
-cp .env.example .env
-
-uvicorn app.main:app --reload --port 8000
-```
-
-Abra:
-
-```text
-http://localhost:8000/docs
-```
-
-## Como rodar o frontend
-
-Em outro terminal:
-
-```bash
-cd frontend
-npm install
-npm run dev
-```
-
-Abra:
-
-```text
-http://localhost:5173
-```
-
-## Exemplo para colar no front
-
-```text
-codigo identificacao - pessoa | Formato criptografado do id do cliente.
+codigo identificacao pessoa | Formato criptografado do id do cliente.
 data nascimento cliente | Data de nascimento do cliente.
-valor contrato credito | Valor total do contrato de crédito.
-codigo matricula beneficio | Código da matrícula do benefício INSS.
+valor contrato credito | Valor total do contrato.
 ```
 
-## Como preparar CSV ou Excel
+Saída esperada:
 
-O arquivo pode ter colunas como:
+- nome original;
+- nome lógico;
+- nome físico;
+- descrição;
+- confiança;
+- justificativa.
+
+## 8. Sobre o dicionário
+
+O dicionário fica em:
 
 ```text
-nome_logico,descricao
-codigo identificacao - pessoa,Formato criptografado do id do cliente.
-data nascimento cliente,Data de nascimento do cliente.
+backend/app/data/sample_dictionary.csv
 ```
 
-Também aceita colunas com nomes como:
-
-- `nome`
-- `variavel`
-- `campo`
-- `raw_name`
-- `descricao`
-- `descrição`
-- `description`
-
-## Como conectar IA depois
-
-Hoje o MVP roda com motor determinístico para estudo e demonstração.  
-A camada de IA já está isolada em:
+Formato esperado:
 
 ```text
-backend/app/services/ai_service.py
+termo;nome_logico_padrao;abreviacao_fisica;natureza;qualificador
 ```
 
-E preparada para receber uma LLM corporativa, Claude, OpenAI ou outro provedor aprovado.
+Exemplo:
 
-Importante: não envie dados internos, sensíveis ou proprietários para IA externa sem validação de segurança/compliance.
+```text
+codigo;Código;cod;IDENTIFICADOR;TECNICO
+identificacao;Identificação;idef;IDENTIFICADOR;TECNICO
+pessoa;Pessoa;pess;ENTIDADE;NEGOCIO
+```
 
+## 9. Evolução com IA/similaridade
 
-## Versão local profissional
+Nem sempre a entrada do usuário vem no padrão.
 
-Esta distribuição inclui:
+Exemplo:
 
-- `setup.bat`: instala dependências;
-- `start.bat`: inicia backend, frontend e abre navegador;
-- `README_USUARIO.txt`: guia simples para usuário;
-- `README_TECNICO.md`: visão técnica e evolução;
-- `docs/roteiro_piloto.md`: roteiro para validar com usuários.
+```text
+dtda = data admissão colaborador
+```
 
-Fluxo recomendado:
+Nesse caso, regra pura pode não ser suficiente.
 
-1. rode `setup.bat` uma vez;
-2. depois use `start.bat`;
-3. valide com poucas pessoas;
-4. ajuste o dicionário;
-5. só depois discuta publicação corporativa.
+A camada de IA/similaridade deve ajudar a interpretar a intenção, mas sem inventar mnemônicos fora do glossário.
+
+Regra de ouro:
+
+```text
+IA sugere, glossário valida.
+```
+
+## 10. Como apresentar
+
+Sugestão de fala:
+
+> Construí um MVP local para validar uma solução de padronização de variáveis. A ideia é reduzir esforço manual na consulta de termos e mnemônicos, melhorar consistência e oferecer uma experiência simples para uso. Para evitar dependência de Node no ambiente corporativo, o frontend é gerado previamente e servido pelo backend Python. A arquitetura separa frontend, backend, dicionário e uma camada preparada para IA/similaridade.
+
+## 11. Troubleshooting
+
+### Frontend não abre
+
+Verifique se existe:
+
+```text
+frontend/dist/index.html
+```
+
+Se não existir, rode na máquina pessoal:
+
+```text
+GERAR_FRONTEND_PESSOAL.bat
+```
+
+### Python não encontrado
+
+Instale ou solicite Python conforme padrão da máquina.
+
+### pip install bloqueado
+
+Possíveis soluções futuras:
+
+- pacote com `.venv` pronto;
+- `.exe` com PyInstaller;
+- uso de repositório interno de pacotes.
+
+## 12. Próximos passos
+
+- adicionar conversão bidirecional;
+- trocar dicionário exemplo pelo glossário real;
+- melhorar score de confiança;
+- adicionar IA/similaridade para casos fora do padrão;
+- validar com usuários piloto.
